@@ -18,11 +18,11 @@ router.get('/',(req,res)=>{
 //@access   public   
 router.post('/signUp', (req, res) => {
     const NewUser = new LoginShema({
-        'Name.FirstName': req.body.name.FirstName,
-        'Name.MiddleName': req.body.name.MiddleName,
-       'Name.LastName': req.body.name.LastName,
+        'Name.FirstName': req.body.Name.FirstName,
+        'Name.MiddleName': req.body.Name.MiddleName,
+       'Name.LastName': req.body.Name.LastName,
         email: req.body.email,
-        PhoneNumber: req.body.phone,
+        PhoneNumber: req.body.phoneNumber,
         password : req.body.password,
     
     });
