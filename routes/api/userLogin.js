@@ -1,8 +1,9 @@
 const express = require('express');
+const bcryptjs = require('bcryptjs');
 const router = express.Router();
 
 // Importing MongoDB Module 
-const LoginShema = require('../../models/UserLogin');
+const LoginShema = require('../../models/mongoModel_UserLogin');
 
 // @routs   /api/userlogin
 //@desc     This is a get Request which will send all user data 
@@ -15,7 +16,7 @@ router.get('/',(req,res)=>{
 //@routs    /api/userlogin
 //@desc     This is a post Request
 //@access   public   
-router.post('/', (req, res) => {
+router.post('/signUp', (req, res) => {
     const NewUser = new LoginShema({
         'Name.FirstName': req.body.name.FirstName,
         'Name.MiddleName': req.body.name.MiddleName,
@@ -32,16 +33,16 @@ router.post('/', (req, res) => {
 // @routs   /api/userlogin
 //@desc     This is a user authentication request 
 //@access   public   
-router.get('/:id', (req, res) => {
+router.post('/login/:id', (req, res) => {
     console.log(req.params.id);
-    LoginShema.findById(req.params.id)
+    LoginShema.findOneById(req.params.id)
         .then(user => {
             console.log(user);
             // password Authentication 
             const useremail = req.body.email;
             const userpassword = req.body.password;
             if(user.email == useremail){
-                if(user.password == userpassword){
+                if(bcryptjs.compare(userpassword,user.password)){
                     res.json(user);
                 }
                 else{
@@ -54,7 +55,7 @@ router.get('/:id', (req, res) => {
         })
         .catch(err => {
             res.json({ "findStatus": false });
-            console.log("data Not found \n\n " + err);
+            console.log("user Not found \n\n " + err);
         });
 });
 

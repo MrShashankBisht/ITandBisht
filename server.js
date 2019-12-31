@@ -32,7 +32,7 @@ mongoose
   );
 
   //  route the request to rout folder
-  app.use('/api/userLogin',userLogin);
+  app.use('/api/userlogin',userLogin);
 
 
 
