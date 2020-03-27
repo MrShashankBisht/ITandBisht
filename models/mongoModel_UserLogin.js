@@ -7,37 +7,25 @@ const Schema = mongoose.Schema;
 
 const UserData = new Schema({
     Name : {
-        FirstName : {
-            type : String,
-            required : false,
-        },
-        MiddleName : {
-            type: String,
-            required: true
-        },
-        LastName : {
-            type: String,
-            required: true
-        }
+        type : String,
+        minlength : 3,
+        required : false,
     },
     email : {
         type : String,
         required : true,
         trim : true,
         lowercase : true,
-        validate(value){
-            if(!this.validator.isEmail(value)){
-                throw new Error("Email is invalid")
-            }
-        }
+        unique : true
     },
     PhoneNumber : {
         type : Number,
-        required : true,
-        maxlength : 10
+        required : false,
+        trim: true,
+        unique : true
     },
     password : {
-        type : String,
+        type : password,
         required : true,
         minlength : 8,
     },
@@ -46,14 +34,6 @@ const UserData = new Schema({
         default : Date.now,
         required : true
     }
-});
-
-UserData.pre('save',async function(next){
-    const user = this;
-    if(user.isModified('password')){
-        user.password = bcryptjs.hash(user.password,10);
-    }
-    next();
 });
 
 module.exports = User = mongoose.model("userLogin",UserData);

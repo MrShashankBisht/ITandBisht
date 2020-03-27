@@ -5,6 +5,8 @@ const mongoose = require('mongoose');
 
 //  importing routs 
 const userLogin = require('./routes/api/userLogin');
+const userSignUp = require('./routes/api/userSignUp');
+const userDelete = require('./routes/api/userDelete');
 
 const app =express();
 
@@ -21,8 +23,7 @@ mongoose
     // useCreateIndex: true,
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    dbName: 'E_marketing_test'
-
+    dbName: 'Notifier'
   })
   .then((result) => console.log(colors.green("You are connected to Mongodb Atlas cloud !!")))
   .catch(err =>
@@ -31,10 +32,11 @@ mongoose
     )
   );
 
-  //  route the request to rout folder
+
+//  route the request to rout folder
   app.use('/api/userlogin',userLogin);
-
-
+  app.use('/api/signUp', userSignUp);
+  app.use('/api/delete', userDelete);
 
 
 const port = process.env.PORT || 5000;
