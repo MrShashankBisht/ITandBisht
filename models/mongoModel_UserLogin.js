@@ -25,7 +25,7 @@ const UserData = new Schema({
         unique : true
     },
     password : {
-        type : password,
+        type : String,
         required : true,
         minlength : 8,
     },
