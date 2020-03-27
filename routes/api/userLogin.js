@@ -38,7 +38,7 @@ router.post('/login', (req, res) => {
     console.log(req.params.id);
     const useremail = req.body.EMAIL;
     const userpassword = req.body.PASSWORD;
-    LoginShema.findOneById(req.params.id)
+    LoginShema.findOne({email : useremail})
         .then(user => {
             console.log(user);
             // password Authentication 
