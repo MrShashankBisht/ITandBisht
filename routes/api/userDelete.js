@@ -9,7 +9,7 @@ const LoginShema = require('../../models/mongoModel_UserLogin');
 // @routs   /api / userDelete
 //@desc     This is a delete Request
 //@access   public   
-router.delete('/:id', (req, res) => {
+router.delete('delete/:id', (req, res) => {
     LoginShema.findById(req.params.id)
         .then(user => {
             user.remove({ "_id": req.param.id })

@@ -34,9 +34,9 @@ mongoose
 
 
 //  route the request to rout folder
-  app.use('/api/userlogin',userLogin);
-  app.use('/api/signUp', userSignUp);
-  app.use('/api/delete', userDelete);
+  app.use('/api',userLogin);
+  app.use('/api', userSignUp);
+  app.use('/api', userDelete);
 
 
 const port = process.env.PORT || 5000;
