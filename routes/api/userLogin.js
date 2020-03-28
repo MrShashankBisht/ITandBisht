@@ -36,14 +36,19 @@ const LoginShema = require('../../models/mongoModel_UserLogin');
 
 router.post('/login', (req, res) => {
     console.log(req.params.id);
-    const useremail = req.body.EMAIL;
-    const userpassword = req.body.PASSWORD;
-    LoginShema.findOne({email : useremail})
-        .then(user => {
+    const useremail = req.body.email;
+    const userpassword = req.body.password;
+    LoginShema.findOne({ email: req.body.email},(err, user) =>{
+        if(err){
+            var errorRes = ({
+                "Status": "Fail",
+                "Message": "user Not found",
+                "error Message" : ""+err.Message
+            });
+            console.log("user Not found \n\n " + err.Message);
+            res.send(errorRes);
+        }else{
             console.log(user);
-            // password Authentication 
-            // const useremail = req.body.email;
-            // const userpassword = req.body.password;
             if (user.email == useremail) {
                 if (bcryptjs.compare(userpassword, user.password)) {
                     res.json(user);
@@ -53,15 +58,8 @@ router.post('/login', (req, res) => {
             } else {
                 res.send("eamil Not match");
             }
-
-        })
-        .catch(err => {
-            res.json({
-                "Status": "Fail",
-                "Message" : "user Not found"
-            });
-            console.log("user Not found \n\n " + err);
-        });
+        }
+    });
 });
 
 module.exports = router;
